@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+</head>
+<body>
+    <%- include('../partials/nav') %>
+    
+    <div>
+        <h2>Index</h2>
+        <ul>
+            <% contacts.forEach(function(contact) { %>
+                <li> <%= contact.name %></li>
+            <% }) %>
+        </ul>
+    </div>
+</body>
+</html>
