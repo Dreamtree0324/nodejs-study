@@ -36,6 +36,7 @@ app.use(methodOverride('_method'));
 
 app.use('/', require('./routes/home'));
 app.use('/contacts', require('./routes/contacts'));
+app.use('/users', require('./routes/users'));
 
 
 app.listen(9090, function(){
