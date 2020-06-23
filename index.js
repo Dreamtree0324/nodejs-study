@@ -34,63 +34,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(methodOverride('_method'));
 
-var contactSchema = mongoose.Schema({
-    name:{type:String, required:true, unique:true},
-    email:{type:String},
-    phone:{type:String}
-});
+app.use('/', require('./routes/home'));
+app.use('/contacts', require('./routes/contacts'));
 
-var Contact = mongoose.model('contact', contactSchema);
-
-app.get("/",function(req, res){
-    res.redirect("/contacts");
-})
-
-app.get("/contacts", function(req, res){
-    Contact.find({}, function(err, contacts){
-        if(err) return res.json(err);
-        res.render("contacts/index", {contacts:contacts});
-    });
-});
-
-app.get("/contacts/new", function(req, res){
-    res.render("contacts/new");
-})
-
-app.post("/contacts", function(req, res){
-    Contact.create(req.body, function(err, contact){
-        if(err) return res.json(err);
-        res.redirect('/contacts');
-    })
-})
-
-app.get("/contacts/:id", function(req, res){
-    Contact.findOne({_id:req.params.id}, function(err, contact){
-        if(err) return res.json(err);
-        res.render('contacts/show', {contact:contact});
-    })
-})
-
-app.get('/contacts/:id/edit', function(req, res){
-    Contact.findOne({_id:req.params.id}, req.body, function(err, contact){
-        if(err) return res.json(err);
-        res.render('contacts/edit', {contact:contact});
-    })
-})
-
-app.put('/contacts/:id', function(req, res){
-    Contact.findOneAndUpdate({_id:req.params.id}, req.body, function(err, contact){
-        if(err) return res.json(err);
-        res.redirect('/contacts/' + req.params.id);
-    })
-})
-
-app.delete('/contacts/:id', function(req, res){
-    Contact.deleteOne({_id:req.params.id}, function(err){
-        if(err) return res.json(err);
-        res.redirect('/contacts');
-    })
-})
 
 app.listen(9090, function(){
     console.log("서버 가동중");
