@@ -74,7 +74,7 @@ app.get("/contacts/:id", function(req, res){
 app.get('/contacts/:id/edit', function(req, res){
     Contact.findOne({_id:req.params.id}, req.body, function(err, contact){
         if(err) return res.json(err);
-        res.redirect('/contacts/' + req.params.id);
+        res.render('contacts/edit', {contact:contact});
     })
 })
 
